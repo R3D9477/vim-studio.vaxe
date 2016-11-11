@@ -1,0 +1,1 @@
+Empty project of application with GUI based on StablexUI.

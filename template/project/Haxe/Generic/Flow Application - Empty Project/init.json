@@ -1,0 +1,17 @@
+{
+	"platforms": {
+		"all": {
+			"before": [
+				{ "cmd": "neko", "args": ["%td%/init.n"], "checkResult": true }
+			],
+			"after": [
+				{ "cmd": "neko", "args": ["%td%/../../../../../sys/VimStudioClient.n", "project", "update_project", "%proj%"] }
+			],
+			"settings": [
+				["vimStudio", "projectType", "flow"],
+				["vaxe", "project", "project.flow"],
+				["vaxe", "target", "%os% -%cpuArch% -cpp"]
+			]
+		}
+	}
+}

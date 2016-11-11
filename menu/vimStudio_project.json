@@ -1,0 +1,11 @@
+{
+	"text": "Haxe ►",
+	"id": "vaxe_haxe",
+	"nw_id": "next",
+	"items": [
+		{ "text": "Build", "id": "vaxe_build" },
+		{},
+		{ "text": "Back ◄", "nw_id": "back" },
+		{ "text": "Close", "nw_id": "close" }
+	]
+}

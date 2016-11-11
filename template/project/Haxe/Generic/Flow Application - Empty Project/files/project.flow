@@ -1,0 +1,26 @@
+{
+	project: {
+		name: "%title%",
+		version: "1.0.0",
+		author: "",
+		
+		app: {
+			name: "%title%",
+			package: "",
+			main: "%main%",
+			codepaths: [ "Source" ],
+			output: "Export"
+		},
+		
+		build: {
+			dependencies: {
+				snow: "*",
+			}
+		},
+		
+		files: {
+			config: "config.json",
+			assets: "Assets/ => assets/"
+		}
+	}
+}

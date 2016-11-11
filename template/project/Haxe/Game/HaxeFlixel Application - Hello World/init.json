@@ -1,0 +1,48 @@
+{
+	"platforms": {
+		"all": {
+			"before": [
+				{ "cmd": "neko", "args": ["%td%/init.n"], "checkResult": true },
+				{ "cmd": "flixel", "args": ["tpl", "-n", "'%title%'"] }
+			],
+			"after": [
+				{ "cmd": "neko", "args": ["%td%/../../../../../sys/VimStudioClient.n", "vaxe", "rename_project", "%proj%", "%proj%", "%cwd%/project.xml"] },
+				{ "cmd": "neko", "args": ["%td%/../../../../../sys/VimStudioClient.n", "project", "update_project", "%proj%"] }
+			],
+			"settings": [
+				["vimStudio", "projectType", "lime"],
+				["vaxe", "project", "project.xml"],
+				["vaxe", "target", "%os% -%cpuArch% -cpp"]
+			]
+		},
+		"bsd": {
+			"before": [
+				{ "cmd": "sh", "args": ["-c", "mv '%title%'/* ./"] },
+				{ "cmd": "rm", "args": ["-rf", "%title%"] },
+				{ "cmd": "mv", "args": ["Project.xml", "project.xml"] }
+			]
+		},
+		"linux": {
+			"before": [
+				{ "cmd": "bash", "args": ["-c", "mv '%title%'/* ./"] },
+				{ "cmd": "rm", "args": ["-rf", "%title%"] },
+				{ "cmd": "mv", "args": ["Project.xml", "project.xml"] }
+			]
+		},
+		"mac": {
+			"before": [
+				{ "cmd": "mv", "args": ["'%title%'/*", "./"] },
+				{ "cmd": "rm", "args": ["-rf", "%title%"] },
+				{ "cmd": "mv", "args": ["Project.xml", "project.xml"] }
+			]
+		},
+		"windows": {
+			"before": [
+				{ "cmd": "cmd", "args": ["/C", "move '%title%'/* ./"] },
+				{ "cmd": "del", "args": ["/s", "/q", "%title%"] },
+				{ "cmd": "rmdir", "args": ["/s", "/q", "%title%"] },
+				{ "cmd": "move", "args": ["Project.xml", "project.xml"] }
+			]
+		}
+	}
+}

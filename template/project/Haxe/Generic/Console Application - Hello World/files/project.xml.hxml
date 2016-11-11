@@ -1,0 +1,9 @@
+-main %main%
+-cp Source
+-cp %title%/Source
+-D native
+-D %os%
+-D desktop
+-cp Export/%os%%cpuArch%/cpp/haxe
+-cpp Export/%os%%cpuArch%/cpp/obj/
+-D display

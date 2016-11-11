@@ -1,0 +1,4 @@
+-main Main
+-cp Source
+-lib systools
+-neko Export/linux64/neko/bin/init.n

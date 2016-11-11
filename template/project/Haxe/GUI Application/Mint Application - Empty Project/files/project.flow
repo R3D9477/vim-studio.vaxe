@@ -1,0 +1,27 @@
+{
+	project: {
+		name: "%title%",
+		version: "1.0.0",
+		author: "",
+		
+		app: {
+			name: "%title%",
+			package: "",
+			main: "%main%",
+			codepaths: ["Source"],
+			output: "Export"
+		},
+		
+		build: {
+			dependencies: {
+				luxe: "*",
+				mint: "*"
+			}
+		},
+		
+		files: {
+			config: "config.json",
+			assets: "Assets/ => assets/"
+		}
+	}
+}
