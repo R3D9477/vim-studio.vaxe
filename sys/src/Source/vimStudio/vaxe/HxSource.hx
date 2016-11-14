@@ -5,16 +5,15 @@ import haxe.io.Path;
 import sys.FileSystem;
 import sys.io.Process;
 
-import hxTypeExt.FileSystemHelper;
+import rn.dataTree.flatTree.*;
+import rn.dataTree.projectTree.*;
 
-import hxTree.TreeCore.FlatTree;
-import hxTree.TreeCore.Item;
-import hxTree.ProjectCore.ProjectItem;
+import rn.typext.hlp.FileSystemHelper;
 
 using Lambda;
 using StringTools;
-using hxTypeExt.XmlExtender;
-using hxTypeExt.StringExtender;
+using rn.typext.ext.XmlExtender;
+using rn.typext.ext.StringExtender;
 
 class HxSource {
 	public static function checkSource (source_path:String) : Bool {
@@ -429,7 +428,7 @@ class HxSource {
 		ftree.loadTreeFromFile(Path.withExtension(vimStudio_path, "tree"));
 		
 		var hxFiles:Array<String> = ftree.itemsList
-			.map(function (item:Item) return cast(item, ProjectItem).path)
+			.map(function (item:FlatTreeItem) return cast(item, ProjectTreeItem).path)
 			.filter(function (path:String) {
 				if (Path.extension(path) == "hx")
 					return FileSystemHelper.getRelativePath(path, Path.directory(xml_proj_path)).split("/")[0] != "Export";

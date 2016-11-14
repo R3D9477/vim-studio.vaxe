@@ -7,13 +7,13 @@ import sys.net.Socket;
 import sys.FileSystem;
 import sys.io.Process;
 
-import hxTypeExt.FileSystemHelper;
-
 import vimStudio.vaxe.HxSource;
-import hxTree.ProjectCore.ProjectTemplate;
+import rn.dataTree.projectTree.*;
+
+import rn.typext.hlp.FileSystemHelper;
 
 using StringTools;
-using hxTypeExt.XmlExtender;
+using rn.typext.ext.XmlExtender;
 
 class VimStudioClient {
 	static function echoRequest (request:Array<String>) : String
