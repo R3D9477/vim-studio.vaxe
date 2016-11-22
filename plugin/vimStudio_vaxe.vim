@@ -115,7 +115,7 @@ endfunction
 function! vimStudio_vaxe#on_project_after_open()
 	if g:vimStudio_vaxe#is_valid_project == 1
 		if exists("g:vaxe_lime") == 1
-			call vimStudio#request(g:vimStudio_vaxe#plugin_dir, "vaxe", "add_lime_source", ['"' . g:vimStudio#buf#mask_bufname . '"', '"' . g:vimStudio_vaxe#project . '"', '"' . g:vimStudio_vaxe#target . '"'])
+			"call vimStudio#request(g:vimStudio_vaxe#plugin_dir, "vaxe", "add_lime_source", ['"' . g:vimStudio#buf#mask_bufname . '"', '"' . g:vimStudio_vaxe#project . '"', '"' . g:vimStudio_vaxe#target . '"'])
 			call vimStudio#request(g:vimStudio_vaxe#plugin_dir, "vaxe", "make_hxml_by_xml", ['"' . g:vimStudio#buf#mask_bufname . '"', '"' . g:vimStudio_vaxe#project . '"', '"' . g:vimStudio_vaxe#target . '"'])
 		endif
 		
