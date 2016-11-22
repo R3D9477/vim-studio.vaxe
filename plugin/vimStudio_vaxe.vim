@@ -190,7 +190,7 @@ endfunction
 function! vimStudio_vaxe#on_before_delete_file(file_index, file_path, delete_from_disk)
 	if g:vimStudio_vaxe#is_valid_project == 1
 		if vimStudio#request(g:vimStudio_vaxe#plugin_dir, "vaxe", "is_valid_file", ['"' . a:file_path . '"']) == 1
-			if vimStudio#request(g:vimStudio_vaxe#plugin_dir, "vaxe", "check_source_file", ['"' . a:file_path . '"']) == 1
+			if vimStudio#request(g:vimStudio_vaxe#plugin_dir, "vaxe", "check_source_file", ['"' . g:vimStudio#buf#mask_bufname . '"', '"' . a:file_path . '"']) == 1
 				let delete_source = vimStudio#dialogs#confirm("Delete hx-source?")
 			else
 				let delete_source = 1

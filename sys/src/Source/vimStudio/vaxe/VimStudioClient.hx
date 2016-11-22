@@ -38,7 +38,7 @@ class VimStudioClient {
 					case "is_valid_file":
 						Sys.stdout().writeString(Path.extension(args[2]) == "hx" || FileSystem.isDirectory(args[2]) ? "1" : "0");
 					case "check_source_file":
-						Sys.stdout().writeString(HxSource.checkSource(FileSystem.isDirectory(args[2]) ? args[2] : Path.directory(args[2])) ? "1" : "0");
+						Sys.stdout().writeString(HxSource.checkSource(args[2], FileSystem.isDirectory(args[3]) ? args[3] : Path.directory(args[3])) ? "1" : "0");
 					case "delete_source":
 						Sys.stdout().writeString(HxSource.deleteSource(args[2], args[3], args[4]) ? "1" : "0");
 					case "add_source":

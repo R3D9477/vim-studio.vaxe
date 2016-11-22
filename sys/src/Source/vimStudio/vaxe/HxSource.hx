@@ -16,10 +16,15 @@ using rn.typext.ext.XmlExtender;
 using rn.typext.ext.StringExtender;
 
 class HxSource {
-	public static function checkSource (source_path:String) : Bool {
-		if (FileSystem.exists(source_path))
-			if (FileSystem.isDirectory(source_path))
-				return FileSystem.readDirectory(source_path).find(function (file:String) return Path.extension(file) == "hx") != null;
+	public static function checkSource (srcPath:String, projDirPath:String) : Bool {
+		srcPath = Path.normalize(srcPath);
+		
+		if (srcPath == FileSystem.fullPath(srcPath))
+			srcPath = Path.join([projDirPath, srcPath]);
+		
+		if (FileSystem.exists(srcPath))
+			if (FileSystem.isDirectory(srcPath))
+				return FileSystem.readDirectory(srcPath).find(function (file:String) return Path.extension(file) == "hx") != null;
 		
 		return false;
 	}
@@ -320,10 +325,10 @@ class HxSource {
 		if (!FileSystem.isDirectory(new_src))
 			return false;
 		
-		if (!checkSource(new_src))
+		if (!FileSystem.exists(xml_proj_path))
 			return false;
 		
-		if (!FileSystem.exists(xml_proj_path))
+		if (!checkSource(new_src, FileSystem.fullPath(Path.directory(xml_proj_path))))
 			return false;
 		
 		var projDir:String = FileSystemHelper.getRelativePath(Path.directory(xml_proj_path), src_path);
@@ -372,47 +377,47 @@ class HxSource {
 		if (!FileSystem.exists(xml_proj_path))
 			return false;
 		
-		var isSpecSrc:Dynamic = function (src_path:String) 
-			return src_path == "Source" || src_path == "Export\\html5\\haxe" || src_path == "d:\\Development\\Haxe\\lime";
+		var projDirPath:String = FileSystem.fullPath(Path.directory(xml_proj_path));
 		
-		var cleanSrcHxml:Dynamic = function (xmlPath:String) {
+		var cleanSrcHxml:String->Void = function (xmlPath:String) : Void {
 			var changed:Bool = false;
 			
-			var hxml_doc:Array<String> = File.getContent(xmlPath + '.hxml').split('\n')
-				.filter(function (instruction:String) {
-					instruction = instruction.trim();
-					if (instruction.length > 0) {
-						if (instruction.substring(0, 1) != '#') {
-							var instructionarr:Array<String> = instruction.split(' ');
-							if (instruction.length > 1 && instructionarr[0] == '-cp') {
-								if (!isSpecSrc(instructionarr[1])) {
-									if (!checkSource(instructionarr[1])) {
-										changed = true;
-										return false;
-									}
-								}
+			var hxml_doc:Array<String> = File.getContent(xmlPath + '.hxml').split('\n').filter(function (instruction:String) : Bool {
+				instruction = instruction.trim();
+			
+				if (instruction.length > 0) {
+					if (instruction.substring(0, 1) != '#') {
+						var instructionarr:Array<String> = instruction.split(' ');
+						
+						if (instruction.length > 1 && instructionarr[0] == '-cp')
+							if (!checkSource(instructionarr[1], projDirPath)) {
+								changed = true;
+								return false;
 							}
-						}
 					}
-					
-					return true;
-				});
+				}
+				
+				return true;
+			});
 			
 			if (changed)
 				File.saveContent(xmlPath + '.hxml', hxml_doc.join('\n'));
 		}
 		
-		var cleanSrcXml:Dynamic = function (xmlPath:String, xpath:String) {
+		var cleanSrcXml:String->String->Void = function (xmlPath:String, xpath:String) : Void {
 			var changed:Bool = false;
 			
 			var hx_doc:Xml = Xml.parse(File.getContent(xmlPath));
 			
 			for (hx_src in hx_doc.findByXpath(xpath)) {
-				if (isSpecSrc(hx_src.get('path'))) {
-					if (!checkSource(hx_src.get('path'))) {
-						hx_src.removeSelf();
-						changed = true;
-					}
+				var src:String = Path.normalize(hx_src.get("path"));
+				
+				if (src == FileSystem.fullPath(src))
+					src = Path.join([Path.directory(xmlPath), src]);
+				
+				if (!checkSource(hx_src.get("path"), projDirPath)) {
+					hx_src.removeSelf();
+					changed = true;
 				}
 			};
 			
