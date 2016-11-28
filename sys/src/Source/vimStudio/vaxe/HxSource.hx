@@ -401,7 +401,7 @@ class HxSource {
 			});
 			
 			if (changed)
-				File.saveContent(xmlPath + '.hxml', hxml_doc.join('\n'));
+				File.saveContent('$xmlPath.hxml', hxml_doc.join('\n'));
 		}
 		
 		var cleanSrcXml:String->String->Void = function (xmlPath:String, xpath:String) : Void {
@@ -415,7 +415,7 @@ class HxSource {
 				if (src == FileSystem.fullPath(src))
 					src = Path.join([Path.directory(xmlPath), src]);
 				
-				if (!checkSource(hx_src.get("path"), projDirPath)) {
+				if (!HxSource.checkSource(hx_src.get("path"), projDirPath)) {
 					hx_src.removeSelf();
 					changed = true;
 				}
@@ -426,8 +426,8 @@ class HxSource {
 		}
 		
 		cleanSrcHxml(xml_proj_path);
-		cleanSrcXml(xml_proj_path, '//project/source');
-		cleanSrcXml(Path.withExtension(xml_proj_path, 'hxproj'), '//project/classpaths/class');
+		cleanSrcXml(xml_proj_path, "//project/source");
+		cleanSrcXml(Path.withExtension(xml_proj_path, "hxproj"), "//project/classpaths/class");
 		
 		var ftree:FlatTree = new FlatTree();
 		ftree.loadTreeFromFile(Path.withExtension(vimStudio_path, "tree"));
